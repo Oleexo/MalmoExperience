@@ -18,92 +18,68 @@
 // --------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using Microsoft.Research.Malmo;
 using RunMission.Framework;
-using RunMission.Utils;
+using RunMission.Framework.Utils;
 
-class Program
-{
-    public static void Main()
-    {
+class Program {
+    public static void Main() {
         AgentHost agentHost = new AgentHost();
-        try
-        {
-            agentHost.parse( new StringVector( Environment.GetCommandLineArgs() ) );
-        }
-        catch( Exception ex )
-        {
+        try {
+            agentHost.parse(new StringVector(Environment.GetCommandLineArgs()));
+        } catch (Exception ex) {
             Console.Error.WriteLine("ERROR: {0}", ex.Message);
             Console.Error.WriteLine(agentHost.getUsage());
             Environment.Exit(1);
         }
-        if( agentHost.receivedArgument("help") )
-        {
+        if (agentHost.receivedArgument("help")) {
             Console.Error.WriteLine(agentHost.getUsage());
             Environment.Exit(0);
         }
 
-		// Generate Mission
-        MissionSpec mission = new MissionSpec();
-        mission.timeLimitInSeconds(10);
-        mission.requestVideo(1280, 768);
-        mission.rewardForReachingPosition(19.5f,0.0f,19.5f,100.0f,1.1f);
 
 
-		// Config Record
+        // Generate Mission
+        var missionXml = string.Empty;
+        using (var stream = new StreamReader("default.xml")) {
+            missionXml = stream.ReadToEnd();
+        }
+        MissionSpec mission = new MissionSpec(missionXml, true);
+
+
+        // Config Record
         MissionRecordSpec missionRecord = new MissionRecordSpec("./saved_data.tgz");
         missionRecord.recordCommands();
         missionRecord.recordRewards();
         missionRecord.recordObservations();
 
-	    Player player;
-		// Start Mission
-        try
-        {
-			player = agentHost.StartMissionAdvanced(mission, missionRecord);
-        }
-        catch (Exception ex)
-        {
+        Body body = null;
+        // Start Mission
+        try {
+            body = agentHost.StartMissionAdvanced(mission, missionRecord);
+        } catch (Exception ex) {
             Console.Error.WriteLine("Error starting mission: {0}", ex.Message);
             Environment.Exit(1);
         }
 
         WorldState worldState;
 
-		// Wait Minecraft
+        // Wait Minecraft
         Console.WriteLine("Waiting for the mission to start");
-        do
-        {
+        do {
             Console.Write(".");
             Thread.Sleep(100);
             worldState = agentHost.getWorldState();
 
             foreach (TimestampedString error in worldState.errors) Console.Error.WriteLine("Error: {0}", error.text);
-        }
-        while (!worldState.is_mission_running);
-        
-		// Start
-        Console.WriteLine();
+        } while (!worldState.is_mission_running);
 
-        Random rand = new Random();
-        // main loop:
-        do
-        {
-            agentHost.sendCommand("move 1");
-            agentHost.sendCommand(string.Format("turn {0}", rand.NextDouble()));
-            Thread.Sleep(500);
-            worldState = agentHost.getWorldState();
-            Console.WriteLine(
-                "video,observations,rewards received: {0}, {1}, {2}",
-                worldState.number_of_video_frames_since_last_state,
-                worldState.number_of_observations_since_last_state,
-                worldState.number_of_rewards_since_last_state);
-            foreach (TimestampedReward reward in worldState.rewards) Console.Error.WriteLine("Summed reward: {0}", reward.getValue());
-            foreach (TimestampedString error in worldState.errors) Console.Error.WriteLine("Error: {0}", error.text);
-        }
-        while (worldState.is_mission_running);
-
+        body.Born();
+        // insert life here !
+        body.Die();
         Console.WriteLine("Mission has stopped.");
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Mission xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<About>
+		<Summary>Aperture Science - test #1</Summary>
+	</About>
+
+	<ServerSection>
+		<ServerInitialConditions>
+			<Time>
+				<StartTime>6000</StartTime>
+				<AllowPassageOfTime>false</AllowPassageOfTime>
+			</Time>
+			<Weather>clear</Weather>
+			<AllowSpawning>false</AllowSpawning>
+		</ServerInitialConditions>
+		<ServerHandlers>
+			<FlatWorldGenerator />
+			<DrawingDecorator>
+				<DrawCuboid x1="-7" y1="3" z1="-7" x2="7" y2="3" z2="7" type="stone"/>
+				<DrawCuboid x1="-3" y1="4" z1="5" x2="-3" y2="10" z2="5" type="log" variant="oak"/>
+				<DrawBlock x="2" y="4" z="-2" type="crafting_table"/>
+			</DrawingDecorator>
+			<ServerQuitFromTimeUp timeLimitMs="10000" description="out_of_time"/>
+			<ServerQuitWhenAnyAgentFinishes />
+		</ServerHandlers>
+	</ServerSection>
+
+	<AgentSection mode="Survival">
+		<Name>GLaDOS</Name>
+		<AgentStart>
+			<Placement x="0" y="4" z="0" yaw="180"/>
+		</AgentStart>
+		<AgentHandlers>
+			<InventoryCommands/>
+			<ContinuousMovementCommands />
+			<SimpleCraftCommands/>
+			
+			<ObservationFromFullStats />
+			<ObservationFromHotBar />
+			<ObservationFromRay />
+			<ObservationFromNearbyEntities >
+				<Range name="NearbyEntities" xrange="10" yrange="1" zrange="10"/>
+			</ObservationFromNearbyEntities>
+			<ObservationFromGrid>
+				<Grid name="Visions">
+					<min x="-5" y="-3" z="-5"/>
+					<max x="5" y="3" z="5"/>
+				</Grid>
+			</ObservationFromGrid>
+		</AgentHandlers>
+	</AgentSection>
+</Mission>
