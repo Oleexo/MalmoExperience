@@ -8,21 +8,28 @@ namespace RunMission.Framework {
         protected readonly Body Body;
         protected readonly Eyes Eyes;
         private Task _brainActivity;
+	    private CancellationTokenSource _cancellationTokenSource;
 
-        public Brain(Body body, Eyes eyes) {
+	    public Brain(Body body, Eyes eyes) {
             Body = body;
             Eyes = eyes;
         }
 
         public void StartToThink() {
-            _brainActivity = Task.Factory.StartNew(DeepThought);
+	        _cancellationTokenSource = new CancellationTokenSource();
+	        _brainActivity = Task.Run(DeepThought, _cancellationTokenSource.Token);
         }
 
-        public void StopThinking() {
+        public async Task StopThinking() {
+			_cancellationTokenSource.Cancel();
+	        await _brainActivity;
         }
 
-        private void DeepThought() {
+        private Task DeepThought() {
             while (Body.IsOnMission) {
+	            if (_cancellationTokenSource.Token.IsCancellationRequested) {
+		            return Task.FromResult(0);
+	            }
                 Console.WriteLine("Looking for wood");
                 while (!Eyes.See("log")) {
                     Thread.Sleep(100);
@@ -36,6 +43,7 @@ namespace RunMission.Framework {
                 }
                 Thread.Sleep(100);
             }
+	        return Task.FromResult(0);
         }
     }
 }

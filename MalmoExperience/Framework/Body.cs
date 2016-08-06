@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Research.Malmo;
 using Newtonsoft.Json;
 using RunMission.Framework.ObservationModels;
@@ -40,8 +41,8 @@ namespace RunMission.Framework {
             ResfreshObservation();
         }
 
-        public void Die() {
-            Brain.StopThinking();
+        public Task Die() {
+			return Brain.StopThinking();
         }
 
         private void ResfreshObservation() {

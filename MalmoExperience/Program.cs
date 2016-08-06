@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Research.Malmo;
 using RunMission.Framework;
 using RunMission.Framework.Utils;
@@ -39,8 +40,6 @@ class Program {
             Console.Error.WriteLine(agentHost.getUsage());
             Environment.Exit(0);
         }
-
-
 
         // Generate Mission
         var missionXml = string.Empty;
@@ -79,7 +78,7 @@ class Program {
 
         body.Born();
         // insert life here !
-        body.Die();
+	    Task.WaitAll(body.Die());
         Console.WriteLine("Mission has stopped.");
     }
 }
