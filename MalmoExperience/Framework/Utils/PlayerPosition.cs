@@ -1,16 +1,16 @@
 ﻿namespace RunMission.Framework.Utils {
     public class PlayerPosition : Coordinate {
-        public PlayerPosition(double x, double y, double z, double yaw, double pitch) : base(x, y, z) {
+        public PlayerPosition(float x, float y, float z, float yaw, float pitch) : base(x, y, z) {
             Yaw = yaw;
             Pitch = pitch;
         }
 
-        public PlayerPosition(Coordinate coordinate, double yaw, double pitch) : base(coordinate.X, coordinate.Y, coordinate.Z) {
+        public PlayerPosition(Coordinate coordinate, float yaw, float pitch) : base(coordinate.X, coordinate.Y, coordinate.Z) {
             Yaw = yaw;
             Pitch = pitch;
         }
 
-        public double Yaw { get; }
-        public double Pitch { get; }
+        public float Yaw { get; }
+        public float Pitch { get; }
     }
 }

@@ -2,7 +2,7 @@
     public class Item : BlockOrItem {
         public int Quantity { get; }
 
-        public Item(double x, double y, double z, 
+        public Item(float x, float y, float z, 
             string name, string variation,
             Color colour, Facing facing, 
             int quantity) : base(x, y, z, name, variation, colour, facing) {

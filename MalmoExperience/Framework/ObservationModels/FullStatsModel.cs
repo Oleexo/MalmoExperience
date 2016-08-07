@@ -10,10 +10,10 @@
         public int XP { get; set; }
         public bool IsAlive { get; set; }
         public int Air { get; set; }
-        public double XPos { get; set; }
-        public double YPos { get; set; }
-        public double ZPos { get; set; }
-        public double Pitch { get; set; }
-        public double Yaw { get; set; }
+        public float XPos { get; set; }
+        public float YPos { get; set; }
+        public float ZPos { get; set; }
+        public float Pitch { get; set; }
+        public float Yaw { get; set; }
     }
 }

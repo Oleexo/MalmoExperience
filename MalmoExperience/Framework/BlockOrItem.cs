@@ -3,7 +3,7 @@ using RunMission.Framework.Utils;
 
 namespace RunMission.Framework {
     public abstract class BlockOrItem : Coordinate {
-        protected BlockOrItem(double x, double y, double z, 
+        protected BlockOrItem(float x, float y, float z, 
             string name, string variant, 
             Color color, Facing facing) : base(x, y, z) {
             Name = name;

@@ -3,11 +3,11 @@
 namespace RunMission.Framework.ObservationModels {
     public class NearbyEntity {
         [JsonProperty("x")]
-        public double X { get; set; }
+        public float X { get; set; }
         [JsonProperty("y")]
-        public double Y { get; set; }
+        public float Y { get; set; }
         [JsonProperty("z")]
-        public double Z { get; set; }
+        public float Z { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("quantity")]

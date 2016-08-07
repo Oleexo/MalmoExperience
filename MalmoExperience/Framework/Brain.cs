@@ -25,10 +25,10 @@ namespace RunMission.Framework {
 	        await _brainActivity;
         }
 
-        private Task DeepThought() {
+        private async Task DeepThought() {
             while (Body.IsOnMission) {
 	            if (_cancellationTokenSource.Token.IsCancellationRequested) {
-		            return Task.FromResult(0);
+		            return;
 	            }
                 Console.WriteLine("Looking for wood");
                 while (!Eyes.See("log")) {
@@ -39,11 +39,11 @@ namespace RunMission.Framework {
                     var woods = Eyes.WhereIs("log");
                     var wood = woods.FirstOrDefault(o => o.Y == Body.Position.Y + 1.0);
                     Console.WriteLine($"Go to: {wood}");
-                    Body.GoTo(wood);
+                    await Body.GoTo(wood);
                 }
                 Thread.Sleep(100);
             }
-	        return Task.FromResult(0);
+	        return;
         }
     }
 }
