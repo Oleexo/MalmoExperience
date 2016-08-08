@@ -39,7 +39,7 @@ namespace RunMission.Framework {
                     var woods = Eyes.WhereIs("log");
                     var wood = woods.FirstOrDefault(o => o.Y == Body.Position.Y + 1.0);
                     Console.WriteLine($"Go to: {wood}");
-                    await Body.GoTo(wood);
+                    await Body.GoInRangeOf(wood);
                 }
                 Thread.Sleep(100);
             }

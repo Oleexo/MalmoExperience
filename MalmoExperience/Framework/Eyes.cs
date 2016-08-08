@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using RunMission.Framework.ObservationModels;
@@ -65,6 +66,16 @@ namespace RunMission.Framework {
                 }
             }
             return blocks.Concat<BlockOrItem>(entities).ToArray();
+        }
+
+        public bool IsInRangeOf(BlockOrItem blockOrItem) {
+            if (LineOfSight == null) {
+                return false;
+            }
+            return LineOfSight.Type == blockOrItem.Name
+                   && Convert.ToInt32(LineOfSight.X) == blockOrItem.X
+                   && Convert.ToInt32(LineOfSight.Y) == blockOrItem.Y
+                   && Convert.ToInt32(LineOfSight.Z) == blockOrItem.Z;
         }
     }
 }

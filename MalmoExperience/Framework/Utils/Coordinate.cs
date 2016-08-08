@@ -7,7 +7,7 @@
 		}
 
 		public Coordinate Center() {
-			return new Coordinate(X - 0.5f, Y - 0.5f, Z - 0.5f);
+			return new Coordinate(X + 0.5f, Y + 0.5f, Z + 0.5f);
 		}
 
 		public float X { get; }

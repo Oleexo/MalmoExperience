@@ -28,7 +28,7 @@
 	<AgentSection mode="Survival">
 		<Name>GLaDOS</Name>
 		<AgentStart>
-			<Placement x="0" y="4" z="0" yaw="180"/>
+			<Placement x="-3" y="4" z="0" yaw="167"/>
 		</AgentStart>
 		<AgentHandlers>
 			<InventoryCommands/>
