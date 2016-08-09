@@ -76,9 +76,11 @@
     <Compile Include="Framework\BlockOrItem.cs" />
     <Compile Include="Framework\Brain.cs" />
     <Compile Include="Framework\Color.cs" />
+    <Compile Include="Framework\ContinuousAction.cs" />
     <Compile Include="Framework\Eyes.cs" />
     <Compile Include="Framework\Facing.cs" />
     <Compile Include="Framework\Inventory.cs" />
+    <Compile Include="Framework\InventoryItem.cs" />
     <Compile Include="Framework\Item.cs" />
     <Compile Include="Framework\ObservationModels\FullStatsModel.cs" />
     <Compile Include="Framework\ObservationModels\LineOfSight.cs" />

@@ -61,6 +61,7 @@ namespace RunMission.Framework {
                     Position = new PlayerPosition(fullStats.XPos, fullStats.YPos, fullStats.ZPos, fullStats.Yaw, fullStats.Pitch);
                     IsAlive = fullStats.IsAlive;
                     Eyes.Refresh(observationText);
+                    Inventory.Refresh(observationText);
                 }
                 Thread.Sleep(1000 / 10);
                 worldState = Agenthost.getWorldState();
@@ -192,6 +193,23 @@ namespace RunMission.Framework {
         protected void Move(double strength) {
             Agenthost.sendCommand($"move {strength}");
         }
+
+        protected void Attack(ContinuousAction action) {
+            Agenthost.sendCommand($"attack {(int)action}");
+        }
         #endregion
+
+        public Task DestroyFocus() {
+            return Task.Run(() => {
+                var blockToDestroy = Eyes.GetFocusedBlock();
+                Block blockFocused;
+                Attack(ContinuousAction.Start);
+                do {
+                    Thread.Sleep(250);
+                    blockFocused = Eyes.GetFocusedBlock();
+                } while (blockToDestroy.Equals(blockFocused));
+                Attack(ContinuousAction.Stop);
+            });
+        }
     }
 }

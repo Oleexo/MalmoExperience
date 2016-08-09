@@ -36,14 +36,24 @@ namespace RunMission.Framework {
                 }
                 // Go to wood
                 if (Eyes.See("log")) {
+                    var pickaxe = Body.Inventory.Get("diamond_pickaxe");
+                    Body.Inventory.SelectItem(pickaxe);
                     var woods = Eyes.WhereIs("log");
                     var wood = woods.FirstOrDefault(o => o.Y == Body.Position.Y + 1.0);
                     Console.WriteLine($"Go to: {wood}");
                     await Body.GoInRangeOf(wood);
+                    Console.WriteLine("wood in range :)");
+                    await Body.DestroyFocus();
+                    Console.WriteLine("wood destroy");
+                    return;
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(1000000);
             }
 	        return;
+        }
+
+        private async Task PickUpItem(Item item) {
+            await Body.GoTo(item);
         }
     }
 }

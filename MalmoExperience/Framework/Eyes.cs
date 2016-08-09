@@ -57,10 +57,10 @@ namespace RunMission.Framework {
             var blocks = new List<Block>();
             for (var i = 0; i < Visions.Count; i++) {
                 if (Visions[i].Equals(blockOrItem)) {
-                    var x = Body.Position.X + i % XLength - XLeft;
+                    var x = Convert.ToSingle(Math.Truncate(Body.Position.X) + i % XLength - XLeft);
                     var idx = i / XLength;
-                    var z = Body.Position.Z + idx % ZLength - ZBackward;
-                    var y = Body.Position.Y + idx / ZLength - YBelow;
+                    var z = Convert.ToSingle(Math.Truncate(Body.Position.Z) + idx % ZLength - ZBackward);
+                    var y = Convert.ToSingle(Math.Truncate(Body.Position.Y) + idx / ZLength - YBelow);
                     var block = new Block(x, y, z, blockOrItem, null, Color.None, Facing.Unknown);
                     blocks.Add(block);
                 }
@@ -73,9 +73,19 @@ namespace RunMission.Framework {
                 return false;
             }
             return LineOfSight.Type == blockOrItem.Name
-                   && Convert.ToInt32(LineOfSight.X) == blockOrItem.X
-                   && Convert.ToInt32(LineOfSight.Y) == blockOrItem.Y
-                   && Convert.ToInt32(LineOfSight.Z) == blockOrItem.Z;
+                   && Math.Truncate(LineOfSight.X) == blockOrItem.X
+                   && Math.Truncate(LineOfSight.Y) == blockOrItem.Y
+                   && Math.Truncate(LineOfSight.Z) == blockOrItem.Z;
+        }
+
+        public Block GetFocusedBlock() {
+            if (LineOfSight == null) {
+                return null;
+            }
+            return new Block(Convert.ToSingle(Math.Truncate(LineOfSight.X)),
+                Convert.ToSingle(Math.Truncate(LineOfSight.Y)),
+                Convert.ToSingle(Math.Truncate(LineOfSight.Z)), 
+                LineOfSight.Type, null, Color.None, Facing.Unknown);
         }
     }
 }
